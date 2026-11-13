@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capi. – capinhas com a sua cara</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+
+<!-- LOGIN -->
+<section class="screen on" id="login">
+  <div class="hero"><div class="logo">Capi<i>.</i></div><p class="mut">Capinhas com a sua cara.</p></div>
+  <form id="loginForm" novalidate>
+    <h2 id="loginTitle">Entrar</h2>
+    <label class="f" id="nameBox" hidden>Nome<input id="lName" autocomplete="name"><small></small></label>
+    <label class="f">E-mail<input id="lEmail" type="email" autocomplete="email" placeholder="voce@email.com"><small></small></label>
+    <label class="f">Senha<input id="lPass" type="password" autocomplete="current-password" placeholder="Mínimo de 6 caracteres"><small></small></label>
+    <a class="link" data-toast="A recuperação de senha depende do backend">Esqueci minha senha</a>
+    <button class="btn" id="loginBtn">Entrar</button>
+    <button type="button" class="btn ghost" id="switchMode">Criar uma conta</button>
+  </form>
+</section>
+
+<!-- HOME -->
+<section class="screen" id="home">
+  <div class="top"><div><small class="mut">Bem-vindo(a)</small><h2 id="hi">Olá!</h2></div></div>
+  <button class="search fake" data-go="search">🔍 Buscar capinhas…</button>
+  <div class="banner"><div><h3>Capinhas novas, cores novas</h3><button class="btn" data-cat="">Ver coleção</button></div><div id="bannerImg"></div></div>
+  <div class="chips" id="homeChips"></div>
+  <div class="sec"><h3>Mais vendidas</h3><a data-cat="">Ver tudo</a></div>
+  <div class="grid" id="homeGrid"></div>
+  <div class="sec"><h3>Novidades</h3></div>
+  <div class="grid" id="homeNew"></div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="screen" id="categories">
+  <div class="top"><h2>Categorias</h2></div>
+  <div id="catList"></div>
+</section>
+
+<!-- BUSCA -->
+<section class="screen" id="search">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button>
+    <form id="searchForm" style="flex:1"><input class="search" id="q" placeholder="Buscar capinhas…" autocomplete="off"></form></div>
+  <h3 class="sec">Buscas sugeridas</h3>
+  <div class="chips wrap" id="suggest"></div>
+</section>
+
+<!-- RESULTADOS -->
+<section class="screen" id="results">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2 id="resTitle">Capinhas</h2>
+    <button class="back" data-go="filters" aria-label="Filtros" style="margin-left:auto">⚙</button></div>
+  <p class="mut small" id="resCount"></p>
+  <div class="grid" id="resGrid"></div>
+</section>
+
+<!-- FILTROS -->
+<section class="screen" id="filters">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Filtros</h2></div>
+  <h3 class="sec">Categoria</h3><div class="chips wrap" id="fCats"></div>
+  <h3 class="sec">Preço máximo: <span id="fMaxOut">R$ 100,00</span></h3>
+  <input type="range" id="fMax" min="30" max="100" step="5" value="100" style="width:100%;accent-color:var(--p)">
+  <label class="f">Ordenar por<select id="fSort"><option value="rel">Mais relevantes</option><option value="asc">Menor preço</option><option value="desc">Maior preço</option></select></label>
+  <button class="btn" data-act="applyFilters">Aplicar filtros</button>
+  <button class="btn ghost" data-act="clearFilters" style="margin-top:10px">Limpar</button>
+</section>
+
+<!-- DETALHE DO PRODUTO -->
+<section class="screen" id="detail">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Detalhes</h2></div>
+  <div id="detailBody"></div>
+</section>
+
+<!-- FAVORITOS -->
+<section class="screen" id="favorites">
+  <div class="top"><h2>Favoritos</h2></div>
+  <div class="grid" id="favGrid"></div>
+</section>
+
+<!-- SACOLA -->
+<section class="screen" id="cart">
+  <div class="top"><h2>Minha sacola</h2></div>
+  <div id="cartBody"></div>
+</section>
+
+<!-- FINALIZAR COMPRA -->
+<section class="screen" id="checkout">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Finalizar compra</h2></div>
+  <form id="addrForm" novalidate>
+    <h3>Endereço de entrega</h3>
+    <label class="f">CEP<input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000"><small></small></label>
+    <label class="f">Rua<input id="street" autocomplete="address-line1"><small></small></label>
+    <label class="f">Número<input id="num" inputmode="numeric"><small></small></label>
+    <label class="f">Cidade<input id="city"><small></small></label>
+    <h3 class="sec">Entrega</h3>
+    <label class="row opt"><input type="radio" name="ship" value="std" checked><div class="info"><b>Padrão</b><br><span class="mut">5 dias úteis · grátis acima de R$ 100</span></div><b>R$ 12,90</b></label>
+    <label class="row opt"><input type="radio" name="ship" value="exp"><div class="info"><b>Expressa</b><br><span class="mut">2 dias úteis</span></div><b>R$ 24,90</b></label>
+    <div class="sum" id="coSum"></div>
+    <button class="btn" style="margin-top:14px">Continuar para o pagamento</button>
+  </form>
+</section>
+
+<!-- PAGAMENTO -->
+<section class="screen" id="payment">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Pagamento</h2></div>
+  <div class="tabs" id="payTabs">
+    <button class="chip on" data-pay="pix">Pix</button><button class="chip" data-pay="card">Cartão</button><button class="chip" data-pay="boleto">Boleto</button>
+  </div>
+  <form id="payForm" novalidate>
+    <div id="payPix" class="note">Ao confirmar, o código Pix é gerado pelo banco. Essa etapa será ligada ao backend.</div>
+    <div id="payBoleto" class="note" hidden>O boleto vence em 3 dias úteis e é gerado pelo backend após a confirmação.</div>
+    <div id="payCard" hidden>
+      <label class="f">Número do cartão<input id="cNum" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000"><small></small></label>
+      <label class="f">Nome no cartão<input id="cName" autocomplete="cc-name"><small></small></label>
+      <div class="two">
+        <label class="f">Validade<input id="cExp" inputmode="numeric" maxlength="5" placeholder="MM/AA"><small></small></label>
+        <label class="f">CVV<input id="cCvv" inputmode="numeric" maxlength="4" placeholder="000"><small></small></label>
+      </div>
+    </div>
+    <div class="sum" id="paySum"></div>
+    <button class="btn" style="margin-top:14px">Confirmar pedido</button>
+  </form>
+</section>
+
+<!-- PEDIDO CONFIRMADO -->
+<section class="screen" id="confirmed">
+  <div class="empty"><div class="okmark">✓</div><h2>Pedido confirmado!</h2>
+    <p>Número do pedido <b id="okId"></b></p><p class="mut">Você pode acompanhar cada etapa da entrega.</p></div>
+  <button class="btn" data-go="tracking">Rastrear pedido</button>
+  <button class="btn ghost" data-go="orders" style="margin-top:10px">Meus pedidos</button>
+  <button class="btn ghost" data-go="home" style="margin-top:10px">Voltar para a loja</button>
+</section>
+
+<!-- MEUS PEDIDOS -->
+<section class="screen" id="orders">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Meus pedidos</h2></div>
+  <div id="orderList"></div>
+</section>
+
+<!-- RASTREAMENTO -->
+<section class="screen" id="tracking">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Rastreamento</h2></div>
+  <div class="sum" id="trackInfo"></div>
+  <div id="steps" style="margin-top:22px"></div>
+</section>
+
+<!-- PERFIL -->
+<section class="screen" id="profile">
+  <div class="top"><h2>Perfil</h2></div>
+  <div class="av" id="avatar">C</div>
+  <h3 style="text-align:center" id="pName"></h3><p class="mut" style="text-align:center;margin-bottom:20px" id="pEmail"></p>
+  <div class="menu">
+    <button data-go="orders">Meus pedidos <span>›</span></button>
+    <button data-go="favorites">Favoritos <span>›</span></button>
+    <button data-go="help">Ajuda e suporte <span>›</span></button>
+    <button data-act="logout">Sair da conta <span>›</span></button>
+  </div>
+</section>
+
+<!-- AJUDA E SUPORTE -->
+<section class="screen" id="help">
+  <div class="top"><button class="back" data-back aria-label="Voltar">‹</button><h2>Ajuda e suporte</h2></div>
+  <details><summary>Quanto tempo leva a entrega?</summary><p>A entrega padrão leva 5 dias úteis e a expressa, 2 dias úteis.</p></details>
+  <details><summary>Como troco uma capinha?</summary><p>Você tem 7 dias após o recebimento. Fale com a gente pelo formulário abaixo.</p></details>
+  <details><summary>Quais formas de pagamento?</summary><p>Pix, cartão de crédito e boleto.</p></details>
+  <form id="helpForm" novalidate>
+    <label class="f">Sua mensagem<textarea id="hMsg" rows="4" placeholder="Conte como podemos ajudar"></textarea><small></small></label>
+    <button class="btn">Enviar mensagem</button>
+  </form>
+</section>
+
+<nav id="nav" hidden>
+  <button data-go="home"><span>🏠</span>Início</button>
+  <button data-go="categories"><span>▦</span>Categorias</button>
+  <button data-go="favorites"><span>♥</span>Favoritos</button>
+  <button data-go="cart"><span>👜</span>Sacola<em id="badge" hidden>0</em></button>
+  <button data-go="profile"><span>☺</span>Perfil</button>
+</nav>
+<div id="toast" role="status"></div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
